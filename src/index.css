@@ -2,6 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: 'YesevaOne-Regular';
+  src: local('YesevaOne-Regular'),
+    url(./fonts/Yeseva_One/YesevaOne-Regular.ttf) format('opentype');
+}
+
+@font-face {
+  font-family: 'FiraSans-Regular';
+  src: local('FiraSans-Regular'),
+    url(./fonts/Fira_Sans/FiraSans-Regular.ttf) format('opentype');
+}
+
 :root {
   --animation-speed: 1000ms;
   --animation-speed-fast: 250ms;
@@ -75,10 +87,19 @@ svg.cursor-pointer:hover {
   height: 3rem;
   align-items: center;
   justify-content: space-between;
+  padding: 0 0.4rem;
 }
 
 .right-icons {
   display: flex;
+}
+
+.title-font {
+  font-family: YesevaOne-Regular;
+}
+
+.title-link-font {
+  font-family: FiraSans-Regular;
 }
 
 @keyframes revealAbsentCharCell {

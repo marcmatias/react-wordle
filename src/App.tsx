@@ -23,6 +23,7 @@ import {
   isWordInWordList,
   isWinningWord,
   solution,
+  solutionNoAccentuation,
   findFirstUnusedReveal,
   unicodeLength,
 } from './lib/words'
@@ -70,7 +71,7 @@ function App() {
     if (loaded?.solution !== solution) {
       return []
     }
-    const gameWasWon = loaded.guesses.includes(solution)
+    const gameWasWon = loaded.guesses.includes(solutionNoAccentuation)
     if (gameWasWon) {
       setIsGameWon(true)
     }
@@ -246,10 +247,13 @@ function App() {
         setIsInfoModalOpen={setIsInfoModalOpen}
         setIsStatsModalOpen={setIsStatsModalOpen}
         setIsSettingsModalOpen={setIsSettingsModalOpen}
+        isDarkMode={isDarkMode}
+        handleDarkMode={handleDarkMode}
       />
-      <div className="pt-2 px-1 pb-8 md:max-w-7xl w-full mx-auto sm:px-6 lg:px-8 flex flex-col grow">
-        <div className="pb-6 grow">
+      <div className="pt-2 px-1 pb-8 md:max-w-7xl w-full mx-auto sm:px-6 lg:px-8 flex flex-col ">
+        <div className="pb-2 sm:pb-6 grow">
           <Grid
+            solution={solution}
             guesses={guesses}
             currentGuess={currentGuess}
             isRevealing={isRevealing}
@@ -285,8 +289,6 @@ function App() {
           handleClose={() => setIsSettingsModalOpen(false)}
           isHardMode={isHardMode}
           handleHardMode={handleHardMode}
-          isDarkMode={isDarkMode}
-          handleDarkMode={handleDarkMode}
           isHighContrastMode={isHighContrastMode}
           handleHighContrastMode={handleHighContrastMode}
         />

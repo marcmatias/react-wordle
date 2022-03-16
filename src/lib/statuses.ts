@@ -1,4 +1,4 @@
-import { solution, unicodeSplit } from './words'
+import { solution, solutionNoAccentuation, unicodeSplit } from './words'
 
 export type CharStatus = 'absent' | 'present' | 'correct'
 
@@ -31,7 +31,7 @@ export const getStatuses = (
 }
 
 export const getGuessStatuses = (guess: string): CharStatus[] => {
-  const splitSolution = unicodeSplit(solution)
+  const splitSolution = unicodeSplit(solutionNoAccentuation)
   const splitGuess = unicodeSplit(guess)
 
   const solutionCharsTaken = splitSolution.map((_) => false)

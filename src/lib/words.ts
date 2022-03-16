@@ -4,15 +4,23 @@ import { WRONG_SPOT_MESSAGE, NOT_CONTAINED_MESSAGE } from '../constants/strings'
 import { getGuessStatuses } from './statuses'
 import { default as GraphemeSplitter } from 'grapheme-splitter'
 
+const wordNoAccents = WORDS.map((x) =>
+  x.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+)
+
+const validGuessesNoAccents = VALID_GUESSES.map((x) =>
+  x.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+)
+
 export const isWordInWordList = (word: string) => {
   return (
-    WORDS.includes(localeAwareLowerCase(word)) ||
-    VALID_GUESSES.includes(localeAwareLowerCase(word))
+    wordNoAccents.includes(localeAwareLowerCase(word)) ||
+    validGuessesNoAccents.includes(localeAwareLowerCase(word))
   )
 }
 
 export const isWinningWord = (word: string) => {
-  return solution === word
+  return solution.normalize('NFD').replace(/[\u0300-\u036f]/g, '') === word
 }
 
 // build a set of previously revealed letters - present and correct
@@ -75,18 +83,23 @@ export const localeAwareUpperCase = (text: string) => {
 }
 
 export const getWordOfDay = () => {
-  // January 1, 2022 Game Epoch
-  const epochMs = new Date(2022, 0).valueOf()
+  const epochMs = new Date(2022, 2, 15).valueOf()
   const now = Date.now()
   const msInDay = 86400000
   const index = Math.floor((now - epochMs) / msInDay)
   const nextday = (index + 1) * msInDay + epochMs
 
+  const solution = localeAwareUpperCase(WORDS[index % WORDS.length])
+
   return {
-    solution: localeAwareUpperCase(WORDS[index % WORDS.length]),
+    solution,
+    solutionNoAccentuation: solution
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, ''),
     solutionIndex: index,
     tomorrow: nextday,
   }
 }
 
-export const { solution, solutionIndex, tomorrow } = getWordOfDay()
+export const { solution, solutionNoAccentuation, solutionIndex, tomorrow } =
+  getWordOfDay()

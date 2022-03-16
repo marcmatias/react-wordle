@@ -4,6 +4,7 @@ import { CurrentRow } from './CurrentRow'
 import { EmptyRow } from './EmptyRow'
 
 type Props = {
+  solution: string
   guesses: string[]
   currentGuess: string
   isRevealing?: boolean
@@ -11,6 +12,7 @@ type Props = {
 }
 
 export const Grid = ({
+  solution,
   guesses,
   currentGuess,
   isRevealing,
@@ -25,6 +27,7 @@ export const Grid = ({
     <>
       {guesses.map((guess, i) => (
         <CompletedRow
+          solution={solution}
           key={i}
           guess={guess}
           isRevealing={isRevealing && guesses.length - 1 === i}

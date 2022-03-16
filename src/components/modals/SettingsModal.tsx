@@ -10,8 +10,6 @@ type Props = {
   handleClose: () => void
   isHardMode: boolean
   handleHardMode: Function
-  isDarkMode: boolean
-  handleDarkMode: Function
   isHighContrastMode: boolean
   handleHighContrastMode: Function
 }
@@ -21,27 +19,20 @@ export const SettingsModal = ({
   handleClose,
   isHardMode,
   handleHardMode,
-  isDarkMode,
-  handleDarkMode,
   isHighContrastMode,
   handleHighContrastMode,
 }: Props) => {
   return (
-    <BaseModal title="Settings" isOpen={isOpen} handleClose={handleClose}>
-      <div className="flex flex-col mt-2 divide-y">
+    <BaseModal title="Configurações" isOpen={isOpen} handleClose={handleClose}>
+      <div className="flex flex-col mt-2 divide-y dark:divide-gray-700">
         <SettingsToggle
-          settingName="Hard Mode"
+          settingName="Modo Difícil"
           flag={isHardMode}
           handleFlag={handleHardMode}
           description={HARD_MODE_DESCRIPTION}
         />
         <SettingsToggle
-          settingName="Dark Mode"
-          flag={isDarkMode}
-          handleFlag={handleDarkMode}
-        />
-        <SettingsToggle
-          settingName="High Contrast Mode"
+          settingName="Aumentar contraste de cores"
           flag={isHighContrastMode}
           handleFlag={handleHighContrastMode}
           description={HIGH_CONTRAST_MODE_DESCRIPTION}

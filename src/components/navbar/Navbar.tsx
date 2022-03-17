@@ -24,13 +24,13 @@ export const Navbar = ({
   handleDarkMode,
 }: Props) => {
   return (
-    <div className="navbar flex sm:justify-center flex-col sm:flex-row select-none border-b-2 border-gray-300 dark:border-gray-600">
+    <div className="navbar flex sm:justify-center flex-col sm:flex-row select-none border-b border-gray-300 dark:border-gray-600">
       <div className="navbar-content">
         <div className="sm:text-xl sm:mr-14 sm:pr-14 font-bold dark:text-white flex">
-          <span className="title-font">Nomes&nbsp;</span> <span>-&nbsp;</span>
+          <span>Nomes&nbsp;</span> <span>-&nbsp;</span>
           <a
             href="https://brasil.io/home/"
-            className="title-link-font text-blue-700 hover:text-blue-800 hover:underline dark:text-blue-400 dark:hover:text-blue-500 flex"
+            className="text-blue-700 hover:text-blue-800 hover:underline dark:text-blue-400 dark:hover:text-blue-500 flex"
           >
             Brasil.io
             <img

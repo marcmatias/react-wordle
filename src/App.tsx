@@ -34,7 +34,6 @@ import {
   setStoredIsHighContrastMode,
   getStoredIsHighContrastMode,
 } from './lib/localStorage'
-import { default as GraphemeSplitter } from 'grapheme-splitter'
 
 import './App.css'
 import { AlertContainer } from './components/alerts/AlertContainer'
@@ -48,12 +47,19 @@ function App() {
 
   const { showError: showErrorAlert, showSuccess: showSuccessAlert } =
     useAlert()
-  const [currentGuess, setCurrentGuess] = useState('')
+  const [currentGuess, setCurrentGuess] = useState('     ')
   const [isGameWon, setIsGameWon] = useState(false)
   const [isInfoModalOpen, setIsInfoModalOpen] = useState(false)
   const [isStatsModalOpen, setIsStatsModalOpen] = useState(false)
   const [isSettingsModalOpen, setIsSettingsModalOpen] = useState(false)
   const [currentRowClass, setCurrentRowClass] = useState('')
+  const [currentCell, setCurrentCell] = useState<number>(() => {
+    const loaded = loadGameStateFromLocalStorage()
+    if (!loaded?.guesses.includes(solution) || !loaded) {
+      return 0
+    }
+    return -1
+  })
   const [isGameLost, setIsGameLost] = useState(false)
   const [isDarkMode, setIsDarkMode] = useState(
     localStorage.getItem('theme')
@@ -164,26 +170,43 @@ function App() {
 
   const onChar = (value: string) => {
     if (
-      unicodeLength(`${currentGuess}${value}`) <= MAX_WORD_LENGTH &&
+      currentCell < MAX_WORD_LENGTH &&
       guesses.length < MAX_CHALLENGES &&
       !isGameWon
     ) {
-      setCurrentGuess(`${currentGuess}${value}`)
+      const currentGuessSplit = currentGuess.split('')
+
+      currentGuessSplit[currentCell] = value
+
+      setCurrentGuess(currentGuessSplit.join(''))
+
+      setCurrentCell(currentCell + 1)
     }
   }
 
   const onDelete = () => {
-    setCurrentGuess(
-      new GraphemeSplitter().splitGraphemes(currentGuess).slice(0, -1).join('')
-    )
+    const currentGuessSplit = currentGuess.split('')
+
+    if (
+      currentGuessSplit[currentCell] !== ' ' &&
+      currentCell < MAX_WORD_LENGTH
+    ) {
+      currentGuessSplit[currentCell] = ' '
+    } else {
+      currentGuessSplit[currentCell - 1] = ' '
+      if (currentCell > 0) {
+        setCurrentCell(currentCell - 1)
+      }
+    }
+
+    setCurrentGuess(currentGuessSplit.join(''))
   }
 
   const onEnter = () => {
     if (isGameWon || isGameLost) {
       return
     }
-
-    if (!(unicodeLength(currentGuess) === MAX_WORD_LENGTH)) {
+    if (/\s/.test(currentGuess)) {
       setCurrentRowClass('jiggle')
       return showErrorAlert(NOT_ENOUGH_LETTERS_MESSAGE, {
         onClose: clearCurrentRowClass,
@@ -223,12 +246,19 @@ function App() {
       !isGameWon
     ) {
       setGuesses([...guesses, currentGuess])
-      setCurrentGuess('')
+      // Removing cursor from currentRow
+      setCurrentCell(-1)
+      setCurrentGuess('     ')
 
       if (winningWord) {
         setStats(addStatsForCompletedGame(stats, guesses.length))
         return setIsGameWon(true)
       }
+
+      // Wait word reveal to add cursor to currentRow
+      setTimeout(() => {
+        setCurrentCell(0)
+      }, REVEAL_TIME_MS * MAX_WORD_LENGTH)
 
       if (guesses.length === MAX_CHALLENGES - 1) {
         setStats(addStatsForCompletedGame(stats, guesses.length + 1))
@@ -250,7 +280,7 @@ function App() {
         isDarkMode={isDarkMode}
         handleDarkMode={handleDarkMode}
       />
-      <div className="pt-2 px-1 pb-8 md:max-w-7xl w-full mx-auto sm:px-6 lg:px-8 flex flex-col ">
+      <div className="pt-2 px-1 pb-8 md:max-w-7xl w-full mx-auto sm:px-6 lg:px-8 flex flex-col grow">
         <div className="pb-2 sm:pb-6 grow">
           <Grid
             solution={solution}
@@ -258,6 +288,9 @@ function App() {
             currentGuess={currentGuess}
             isRevealing={isRevealing}
             currentRowClassName={currentRowClass}
+            inputPosition={setCurrentCell}
+            currentPosition={currentCell}
+            isGameWon={isGameWon}
           />
         </div>
         <Keyboard

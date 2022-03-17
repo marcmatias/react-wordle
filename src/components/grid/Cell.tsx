@@ -9,6 +9,10 @@ type Props = {
   isRevealing?: boolean
   isCompleted?: boolean
   position?: number
+  dataKey?: number
+  inputPosition?: Function
+  currentPosition?: number
+  isGameWon?: boolean
 }
 
 export const Cell = ({
@@ -17,6 +21,10 @@ export const Cell = ({
   isRevealing,
   isCompleted,
   position = 0,
+  dataKey,
+  inputPosition,
+  currentPosition,
+  isGameWon,
 }: Props) => {
   const isFilled = value && !isCompleted
   const shouldReveal = isRevealing && isCompleted
@@ -28,7 +36,13 @@ export const Cell = ({
     {
       'bg-white dark:bg-slate-900 border-slate-300 dark:border-slate-600':
         !status,
-      'border-black dark:border-slate-100': value && !status,
+      'border-black dark:border-slate-100': value && !status && value !== ' ',
+      'border-black dark:border-slate-100 border-b-4':
+        (value === ' ' && !status && currentPosition === dataKey) ||
+        ((value ? /[A-Z]/.test(value) : false) &&
+          !status &&
+          currentPosition !== undefined &&
+          currentPosition === dataKey),
       'absent shadowed bg-slate-400 dark:bg-slate-700 text-white border-slate-400 dark:border-slate-700':
         status === 'absent',
       'correct shadowed bg-orange-500 text-white border-orange-500':
@@ -43,12 +57,23 @@ export const Cell = ({
       'cell-reveal': shouldReveal,
     }
   )
+  const handleClick: React.MouseEventHandler<HTMLButtonElement> = (event) => {
+    if (inputPosition && !isGameWon) {
+      event.currentTarget.blur()
+      inputPosition(dataKey)
+    }
+  }
 
   return (
-    <div className={classes} style={{ animationDelay }}>
+    <button
+      className={classes}
+      style={{ animationDelay }}
+      key={dataKey}
+      onClick={(event) => handleClick(event)}
+    >
       <div className="letter-container" style={{ animationDelay }}>
         {value}
       </div>
-    </div>
+    </button>
   )
 }

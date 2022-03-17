@@ -35,6 +35,8 @@ export const Keyboard = ({
     const listener = (e: KeyboardEvent) => {
       if (e.code === 'Enter') {
         onEnter()
+      } else if (e.code === 'Space') {
+        e.preventDefault()
       } else if (e.code === 'Backspace') {
         onDelete()
       } else {

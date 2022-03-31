@@ -83,12 +83,11 @@ export const localeAwareUpperCase = (text: string) => {
 }
 
 export const getWordOfDay = () => {
-  const epochMs = new Date(2022, 2, 15).valueOf()
+  const epochMs = new Date(2022, 2, 30).valueOf()
   const now = Date.now()
   const msInDay = 86400000
   const index = Math.floor((now - epochMs) / msInDay)
   const nextday = (index + 1) * msInDay + epochMs
-
   const solution = localeAwareUpperCase(WORDS[index % WORDS.length])
 
   return {

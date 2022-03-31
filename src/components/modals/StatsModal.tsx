@@ -12,6 +12,8 @@ import {
   SHARE_TEXT,
 } from '../../constants/strings'
 
+import { solution } from '../../lib/words'
+
 type Props = {
   isOpen: boolean
   handleClose: () => void
@@ -65,31 +67,47 @@ export const StatsModal = ({
         numberOfGuessesMade={numberOfGuessesMade}
       />
       {(isGameLost || isGameWon) && (
-        <div className="mt-5 sm:mt-6 columns-2 dark:text-white">
-          <div>
-            <h5>{NEW_WORD_TEXT}</h5>
-            <Countdown
-              className="text-lg font-medium text-gray-900 dark:text-gray-100"
-              date={tomorrow}
-              daysInHours={true}
-            />
+        <div>
+          <p className="text-xm leading-6 font-medium text-gray-900 dark:text-gray-100 mt-4 hover:underline">
+            <a
+              href={`https://brasil.io/dataset/genero-nomes/nomes/?search=${solution}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-blue-600 dark:text-blue-400"
+            >
+              Veja o dataset em que o nome do dia{' '}
+              <b className="text-blue-700 dark:text-blue-300 underline">
+                {solution}
+              </b>{' '}
+              foi extraído do Brasil.io
+            </a>
+          </p>
+          <div className="mt-2 sm:mt-3 columns-2 dark:text-white">
+            <div>
+              <h5>{NEW_WORD_TEXT}</h5>
+              <Countdown
+                className="text-lg font-medium text-gray-900 dark:text-gray-100"
+                date={tomorrow}
+                daysInHours={true}
+              />
+            </div>
+            <button
+              type="button"
+              className="mt-2 w-full rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:text-sm"
+              onClick={() => {
+                shareStatus(
+                  guesses,
+                  isGameLost,
+                  isHardMode,
+                  isDarkMode,
+                  isHighContrastMode,
+                  handleShareToClipboard
+                )
+              }}
+            >
+              {SHARE_TEXT}
+            </button>
           </div>
-          <button
-            type="button"
-            className="mt-2 w-full rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:text-sm"
-            onClick={() => {
-              shareStatus(
-                guesses,
-                isGameLost,
-                isHardMode,
-                isDarkMode,
-                isHighContrastMode,
-                handleShareToClipboard
-              )
-            }}
-          >
-            {SHARE_TEXT}
-          </button>
         </div>
       )}
     </BaseModal>

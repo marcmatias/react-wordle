@@ -64,6 +64,8 @@ export const InfoModal = ({ isOpen, handleClose }: Props) => {
         <a
           href="https://brasil.io/dataset/genero-nomes/nomes/?search=maria&first_name=&group_name=&classification="
           className="underline font-bold"
+          target="_blank"
+          rel="noopener noreferrer"
         >
           dataset de nomes de brasileiros
         </a>{' '}
@@ -79,6 +81,8 @@ export const InfoModal = ({ isOpen, handleClose }: Props) => {
         <a
           href="https://github.com/marcmatias/react-wordle"
           className="underline font-bold"
+          target="_blank"
+          rel="noopener noreferrer"
         >
           Nomes Br
         </a>
@@ -90,6 +94,8 @@ export const InfoModal = ({ isOpen, handleClose }: Props) => {
         <a
           href="https://github.com/cwackerfuss/react-wordle"
           className="underline font-bold"
+          target="_blank"
+          rel="noopener noreferrer"
         >
           React Wordle
         </a>{' '}

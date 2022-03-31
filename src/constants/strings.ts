@@ -13,7 +13,9 @@ export const HARD_MODE_DESCRIPTION =
 export const HIGH_CONTRAST_MODE_DESCRIPTION =
   'Para maior contraste entre as cores'
 export const CORRECT_WORD_MESSAGE = (solution: string) =>
-  `A palavra era ${solution}`
+  `O nome era ${solution}`
+export const WELCOME_MESSAGE = (solution: string) =>
+  `O nome do dia tem ${solution.length} letras`
 export const WRONG_SPOT_MESSAGE = (guess: string, position: number) =>
   `Deve usar ${guess} na posição ${position}`
 export const NOT_CONTAINED_MESSAGE = (letter: string) =>
@@ -22,7 +24,7 @@ export const ENTER_TEXT = 'Enter'
 export const DELETE_TEXT = 'Apagar'
 export const STATISTICS_TITLE = 'Estatísticas'
 export const GUESS_DISTRIBUTION_TEXT = 'Distribuição de tentativas'
-export const NEW_WORD_TEXT = 'Nova palavra em'
+export const NEW_WORD_TEXT = 'Nova nome em'
 export const SHARE_TEXT = 'Compartilhar'
 export const TOTAL_TRIES_TEXT = 'Total de tentativas'
 export const SUCCESS_RATE_TEXT = 'Média de sucesso'

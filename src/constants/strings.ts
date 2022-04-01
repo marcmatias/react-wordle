@@ -1,11 +1,11 @@
 export const GAME_URL = process.env.REACT_APP_GAME_URL!
 export const GAME_TITLE = process.env.REACT_APP_GAME_NAME!
 
-export const WIN_MESSAGES = ['Bom trabalho!', 'Incrível', 'Muito Bom!']
+export const WIN_MESSAGES = ['Bom trabalho!', 'Incrível!', 'Muito Bom!']
 export const GAME_COPIED_MESSAGE =
   'Resultado copiado para o sua área de transferência'
 export const NOT_ENOUGH_LETTERS_MESSAGE = 'Não tem letras o suficiente'
-export const WORD_NOT_FOUND_MESSAGE = 'Palavra não encontrada'
+export const WORD_NOT_FOUND_MESSAGE = 'Esse nome não é válido'
 export const HARD_MODE_ALERT_MESSAGE =
   'Modo dificil só pode ser ativado no inicio do jogo!'
 export const HARD_MODE_DESCRIPTION =
@@ -24,35 +24,9 @@ export const ENTER_TEXT = 'Enter'
 export const DELETE_TEXT = 'Apagar'
 export const STATISTICS_TITLE = 'Estatísticas'
 export const GUESS_DISTRIBUTION_TEXT = 'Distribuição de tentativas'
-export const NEW_WORD_TEXT = 'Nova nome em'
+export const NEW_WORD_TEXT = 'Novo nome em'
 export const SHARE_TEXT = 'Compartilhar'
 export const TOTAL_TRIES_TEXT = 'Total de tentativas'
 export const SUCCESS_RATE_TEXT = 'Média de sucesso'
 export const CURRENT_STREAK_TEXT = 'Total de sequência de acertos seguidos'
 export const BEST_STREAK_TEXT = 'Melhor sequência de acertos seguidos'
-
-// export const WIN_MESSAGES = ['Great Job!', 'Awesome', 'Well done!']
-// export const GAME_COPIED_MESSAGE = 'Game copied to clipboard'
-// export const NOT_ENOUGH_LETTERS_MESSAGE = 'Not enough letters'
-// export const WORD_NOT_FOUND_MESSAGE = 'Word not found'
-// export const HARD_MODE_ALERT_MESSAGE =
-//   'Hard Mode can only be enabled at the start!'
-// export const HARD_MODE_DESCRIPTION =
-//   'Any revealed hints must be used in subsequent guesses'
-// export const HIGH_CONTRAST_MODE_DESCRIPTION = 'For improved color vision'
-// export const CORRECT_WORD_MESSAGE = (solution: string) =>
-//   `The word was ${solution}`
-// export const WRONG_SPOT_MESSAGE = (guess: string, position: number) =>
-//   `Must use ${guess} in position ${position}`
-// export const NOT_CONTAINED_MESSAGE = (letter: string) =>
-//   `Guess must contain ${letter}`
-// export const ENTER_TEXT = 'Enter'
-// export const DELETE_TEXT = 'Delete'
-// export const STATISTICS_TITLE = 'Statistics'
-// export const GUESS_DISTRIBUTION_TEXT = 'Guess Distribution'
-// export const NEW_WORD_TEXT = 'New word in'
-// export const SHARE_TEXT = 'Share'
-// export const TOTAL_TRIES_TEXT = 'Total tries'
-// export const SUCCESS_RATE_TEXT = 'Success rate'
-// export const CURRENT_STREAK_TEXT = 'Current streak'
-// export const BEST_STREAK_TEXT = 'Best streak'

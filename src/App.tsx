@@ -11,6 +11,7 @@ import {
   WORD_NOT_FOUND_MESSAGE,
   CORRECT_WORD_MESSAGE,
   HARD_MODE_ALERT_MESSAGE,
+  WELCOME_MESSAGE,
 } from './constants/strings'
 import {
   MAX_WORD_LENGTH,
@@ -47,7 +48,7 @@ function App() {
 
   const { showError: showErrorAlert, showSuccess: showSuccessAlert } =
     useAlert()
-  const [currentGuess, setCurrentGuess] = useState('     ')
+  const [currentGuess, setCurrentGuess] = useState(' '.repeat(MAX_WORD_LENGTH))
   const [isGameWon, setIsGameWon] = useState(false)
   const [isInfoModalOpen, setIsInfoModalOpen] = useState(false)
   const [isStatsModalOpen, setIsStatsModalOpen] = useState(false)
@@ -75,6 +76,7 @@ function App() {
   const [guesses, setGuesses] = useState<string[]>(() => {
     const loaded = loadGameStateFromLocalStorage()
     if (loaded?.solution !== solution) {
+      showSuccessAlert(WELCOME_MESSAGE(solution))
       return []
     }
     const gameWasWon = loaded.guesses.includes(solutionNoAccentuation)
@@ -86,6 +88,8 @@ function App() {
       showErrorAlert(CORRECT_WORD_MESSAGE(solution), {
         persist: true,
       })
+    } else if (loaded.guesses.length !== MAX_CHALLENGES && !gameWasWon) {
+      showSuccessAlert(WELCOME_MESSAGE(solution))
     }
     return loaded.guesses
   })
@@ -248,7 +252,7 @@ function App() {
       setGuesses([...guesses, currentGuess])
       // Removing cursor from currentRow
       setCurrentCell(-1)
-      setCurrentGuess('     ')
+      setCurrentGuess(' '.repeat(MAX_WORD_LENGTH))
 
       if (winningWord) {
         setStats(addStatsForCompletedGame(stats, guesses.length))

@@ -3,6 +3,7 @@ import classnames from 'classnames'
 import { CharStatus } from '../../lib/statuses'
 import { MAX_WORD_LENGTH, REVEAL_TIME_MS } from '../../constants/settings'
 import { getStoredIsHighContrastMode } from '../../lib/localStorage'
+import useWindowDimensions from '../useWindowDimensions'
 
 type Props = {
   children?: ReactNode
@@ -16,7 +17,7 @@ type Props = {
 export const Key = ({
   children,
   status,
-  width = 40,
+  width = 45,
   value,
   onClick,
   isRevealing,
@@ -42,10 +43,12 @@ export const Key = ({
     }
   )
 
+  const { height } = useWindowDimensions()
+
   const styles = {
     transitionDelay: isRevealing ? `${keyDelayMs}ms` : 'unset',
     width: `${width}px`,
-    height: '58px',
+    height: height < 400 ? '28px' : '58px',
   }
 
   const handleClick: React.MouseEventHandler<HTMLButtonElement> = (event) => {

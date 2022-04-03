@@ -26,45 +26,43 @@ export const Navbar = ({
   return (
     <div className="navbar flex sm:justify-center flex-col sm:flex-row select-none border-b border-gray-300 dark:border-gray-600">
       <div className="navbar-content">
-        <div className="sm:text-xl sm:mr-14 sm:pr-14 font-bold dark:text-white flex">
+        <div className="text-xs xxs:text-base sm:text-xl sm:mr-14 sm:pr-14 font-bold dark:text-white flex items-center">
           <span>Nomes&nbsp;</span> <span>-&nbsp;</span>
           <a
             href="https://brasil.io/home/"
-            className="text-blue-700 hover:text-blue-800 hover:underline dark:text-blue-400 dark:hover:text-blue-500 flex"
+            className="text-blue-700 hover:text-blue-800 hover:underline dark:text-blue-400 dark:hover:text-blue-500"
           >
             Brasil.io
-            <img
-              src={LogoBrio}
-              alt="Logo Brasil.io"
-              className="pl-2 dark:hidden"
-              style={{ height: '22px' }}
-            />
-            <img
-              src={LogoBrioDark}
-              alt="Logo Brasil.io"
-              className="pl-2 hidden dark:block"
-              style={{ height: '22px' }}
-            />
           </a>
+          <img
+            src={LogoBrio}
+            alt="Logo Brasil.io"
+            className="pl-2 dark:hidden h-4"
+          />
+          <img
+            src={LogoBrioDark}
+            alt="Logo Brasil.io"
+            className="pl-2 hidden dark:block h-4"
+          />
         </div>
 
         <div className="right-icons">
           <InformationCircleIcon
-            className="h-6 w-6 mr-3 cursor-pointer dark:stroke-white"
+            className="h-6 w-6 mr-2 sm:mr-3 cursor-pointer dark:stroke-white"
             onClick={() => setIsInfoModalOpen(true)}
           />
           <ChartBarIcon
-            className="h-6 w-6 mr-3 cursor-pointer dark:stroke-white"
+            className="h-6 w-6 mr-2 sm:mr-3 cursor-pointer dark:stroke-white"
             onClick={() => setIsStatsModalOpen(true)}
           />
           {isDarkMode ? (
             <SunIcon
-              className="h-6 w-6 mr-3 cursor-pointer dark:stroke-white"
+              className="h-6 w-6 mr-2 sm:mr-3 cursor-pointer dark:stroke-white"
               onClick={() => handleDarkMode(!isDarkMode)}
             />
           ) : (
             <MoonIcon
-              className="h-6 w-6 mr-3 cursor-pointer"
+              className="h-6 w-6 mr-2 sm:mr-3 cursor-pointer"
               onClick={() => handleDarkMode(!isDarkMode)}
             />
           )}

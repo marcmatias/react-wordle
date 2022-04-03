@@ -2,6 +2,7 @@ import { CharStatus } from '../../lib/statuses'
 import classnames from 'classnames'
 import { REVEAL_TIME_MS } from '../../constants/settings'
 import { getStoredIsHighContrastMode } from '../../lib/localStorage'
+import useWindowDimensions from '../useWindowDimensions'
 
 type Props = {
   value?: string
@@ -30,10 +31,13 @@ export const Cell = ({
   const shouldReveal = isRevealing && isCompleted
   const animationDelay = `${position * REVEAL_TIME_MS}ms`
   const isHighContrast = getStoredIsHighContrastMode()
+  const { height } = useWindowDimensions()
 
   const classes = classnames(
     'w-14 h-14 border-solid border-2 flex items-center justify-center mx-0.5 text-4xl font-bold rounded dark:text-white select-none',
     {
+      'w-10 h-10 text-3xl': height < 666,
+      'w-5 h-5 text-base': height < 375,
       'bg-white dark:bg-slate-900 border-slate-300 dark:border-slate-600':
         !status,
       'border-black dark:border-slate-100': value && !status && value !== ' ',

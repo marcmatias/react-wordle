@@ -20,8 +20,6 @@ export const WRONG_SPOT_MESSAGE = (guess: string, position: number) =>
   `Deve usar ${guess} na posição ${position}`
 export const NOT_CONTAINED_MESSAGE = (letter: string) =>
   `Tentativa deve conter ${letter}`
-export const ENTER_TEXT = 'Enter'
-export const DELETE_TEXT = 'Apagar'
 export const STATISTICS_TITLE = 'Estatísticas'
 export const GUESS_DISTRIBUTION_TEXT = 'Distribuição de tentativas'
 export const NEW_WORD_TEXT = 'Novo nome em'

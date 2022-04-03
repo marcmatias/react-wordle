@@ -40,6 +40,7 @@ import './App.css'
 import { AlertContainer } from './components/alerts/AlertContainer'
 import { useAlert } from './context/AlertContext'
 import { Navbar } from './components/navbar/Navbar'
+import useWindowDimensions from './components/useWindowDimensions'
 
 function App() {
   const prefersDarkMode = window.matchMedia(
@@ -274,9 +275,10 @@ function App() {
       }
     }
   }
+  const { height } = useWindowDimensions()
 
   return (
-    <div className="h-screen flex flex-col">
+    <div className="app flex flex-col">
       <Navbar
         setIsInfoModalOpen={setIsInfoModalOpen}
         setIsStatsModalOpen={setIsStatsModalOpen}
@@ -284,8 +286,13 @@ function App() {
         isDarkMode={isDarkMode}
         handleDarkMode={handleDarkMode}
       />
-      <div className="pt-2 px-1 pb-8 md:max-w-7xl w-full mx-auto sm:px-6 lg:px-8 flex flex-col grow">
-        <div className="pb-2 sm:pb-6 grow">
+      <div
+        className={
+          (height > 600 ? 'pt-2' : '') +
+          ' px-1 pb-8 md:max-w-7xl w-full mx-auto sm:px-6 lg:px-8 flex flex-col grow h-full'
+        }
+      >
+        <div className={'grow ' + (height > 600 ? 'pb-2 sm:pb-6' : '')}>
           <Grid
             solution={solution}
             guesses={guesses}

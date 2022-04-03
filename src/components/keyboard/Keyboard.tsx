@@ -1,7 +1,6 @@
 import { getStatuses } from '../../lib/statuses'
 import { Key } from './Key'
 import { useEffect } from 'react'
-import { ENTER_TEXT, DELETE_TEXT } from '../../constants/strings'
 import { localeAwareUpperCase } from '../../lib/words'
 
 type Props = {
@@ -55,7 +54,7 @@ export const Keyboard = ({
 
   return (
     <div>
-      <div className="flex justify-center mb-1">
+      <div className="flex justify-center mb-1 sm:-ml-12">
         {['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P'].map((key) => (
           <Key
             value={key}
@@ -66,7 +65,7 @@ export const Keyboard = ({
           />
         ))}
       </div>
-      <div className="flex justify-center mb-1">
+      <div className="flex justify-center mb-1 ml-2 xs:ml-4">
         {['A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L'].map((key) => (
           <Key
             value={key}
@@ -76,11 +75,19 @@ export const Keyboard = ({
             isRevealing={isRevealing}
           />
         ))}
-      </div>
-      <div className="flex justify-center">
-        <Key width={65.4} value="ENTER" onClick={onClick}>
-          {ENTER_TEXT}
+        <Key value="DELETE" onClick={onClick}>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            fill="currentColor"
+            viewBox="0 0 16 16"
+          >
+            <path d="M15.683 3a2 2 0 0 0-2-2h-7.08a2 2 0 0 0-1.519.698L.241 7.35a1 1 0 0 0 0 1.302l4.843 5.65A2 2 0 0 0 6.603 15h7.08a2 2 0 0 0 2-2V3zM5.829 5.854a.5.5 0 1 1 .707-.708l2.147 2.147 2.146-2.147a.5.5 0 1 1 .707.708L9.39 8l2.146 2.146a.5.5 0 0 1-.707.708L8.683 8.707l-2.147 2.147a.5.5 0 0 1-.707-.708L7.976 8 5.829 5.854z" />
+          </svg>
         </Key>
+      </div>
+      <div className="flex justify-center ml-6">
         {['Z', 'X', 'C', 'V', 'B', 'N', 'M'].map((key) => (
           <Key
             value={key}
@@ -90,8 +97,18 @@ export const Keyboard = ({
             isRevealing={isRevealing}
           />
         ))}
-        <Key width={65.4} value="DELETE" onClick={onClick}>
-          {DELETE_TEXT}
+        <Key width={89} value="ENTER" onClick={onClick}>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            viewBox="0 0 16 16"
+          >
+            <path
+              fill="currentColor"
+              d="M14.5 1.5a.5.5 0 0 1 .5.5v4.8a2.5 2.5 0 0 1-2.5 2.5H2.707l3.347 3.346a.5.5 0 0 1-.708.708l-4.2-4.2a.5.5 0 0 1 0-.708l4-4a.5.5 0 1 1 .708.708L2.707 8.3H12.5A1.5 1.5 0 0 0 14 6.8V2a.5.5 0 0 1 .5-.5z"
+            />
+          </svg>
         </Key>
       </div>
     </div>

@@ -13,7 +13,7 @@ export const InfoModal = ({ isOpen, handleClose }: Props) => {
         Acerte o nome em 6 tentativas. Depois de cada tentativa a cor das
         células vai mudar exibindo o quão próximo você está do nome correto.
         Lembrando que são <b>nomes próprios de brasileiros(as).</b> Pelo menos
-        50.000 ou mais pessoas no país tem esse nome.
+        100.000 ou mais pessoas no país tem esse nome.
       </p>
 
       <div className="flex justify-center mb-1 mt-4">

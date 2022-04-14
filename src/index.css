@@ -53,6 +53,22 @@
   animation-fill-mode: backwards;
 }
 
+.letter-container {
+  font-size: 2rem;
+}
+
+@media only screen and (max-height: 800px) {
+  .letter-container {
+    font-size: 4vh;
+  }
+}
+
+@media only screen and (max-height: 400px) {
+  .letter-container {
+    font-size: 3.3vh;
+  }
+}
+
 svg.cursor-pointer {
   transition: all var(--animation-speed-fast);
 }

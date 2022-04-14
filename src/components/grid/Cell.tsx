@@ -2,7 +2,6 @@ import { CharStatus } from '../../lib/statuses'
 import classnames from 'classnames'
 import { REVEAL_TIME_MS } from '../../constants/settings'
 import { getStoredIsHighContrastMode } from '../../lib/localStorage'
-import useWindowDimensions from '../useWindowDimensions'
 
 type Props = {
   value?: string
@@ -31,17 +30,14 @@ export const Cell = ({
   const shouldReveal = isRevealing && isCompleted
   const animationDelay = `${position * REVEAL_TIME_MS}ms`
   const isHighContrast = getStoredIsHighContrastMode()
-  const { height } = useWindowDimensions()
 
   const classes = classnames(
-    'w-14 h-14 border-solid border-2 flex items-center justify-center mx-0.5 text-4xl font-bold rounded dark:text-white select-none',
+    'w-12 border-solid border-2 mx-0.5 font-bold rounded dark:text-white select-none',
     {
-      'w-10 h-10 text-3xl': height < 666,
-      'w-5 h-5 text-base': height < 375,
       'bg-white dark:bg-slate-900 border-slate-300 dark:border-slate-600':
         !status,
       'border-black dark:border-slate-100': value && !status && value !== ' ',
-      'border-black dark:border-slate-100 border-b-4':
+      'border-black dark:border-slate-100 ring-1 ring-black dark:ring-white bg-gray-100 dark:bg-gray-800 text-black':
         (value === ' ' && !status && currentPosition === dataKey) ||
         ((value ? /[A-Z]/.test(value) : false) &&
           !status &&
@@ -76,7 +72,12 @@ export const Cell = ({
       onClick={(event) => handleClick(event)}
     >
       <div className="letter-container" style={{ animationDelay }}>
-        {value}
+        {/* Making all empty cells have an transparent letter to show correct aspect ratio */}
+        {value && value !== ' ' ? (
+          value
+        ) : (
+          <span className="text-transparent">X</span>
+        )}
       </div>
     </button>
   )

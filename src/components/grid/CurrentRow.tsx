@@ -19,7 +19,7 @@ export const CurrentRow = ({
 }: Props) => {
   const splitGuess = unicodeSplit(guess)
   const emptyCells = Array.from(Array(MAX_WORD_LENGTH - splitGuess.length))
-  const classes = `flex justify-center mb-1 ${className}`
+  const classes = `flex justify-center mb-1 h-full max-h-14 ${className}`
 
   return (
     <div className={classes}>

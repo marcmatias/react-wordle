@@ -30,7 +30,7 @@ export const Grid = ({
       : []
 
   return (
-    <>
+    <div className="flex flex-col max-w-md h-full max-h-96 mx-auto">
       {guesses.map((guess, i) => (
         <CompletedRow
           solution={solution}
@@ -51,6 +51,6 @@ export const Grid = ({
       {empties.map((_, i) => (
         <EmptyRow key={i} />
       ))}
-    </>
+    </div>
   )
 }

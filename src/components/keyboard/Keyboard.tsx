@@ -7,6 +7,7 @@ type Props = {
   onChar: (value: string) => void
   onDelete: () => void
   onEnter: () => void
+  onArrow: (key: string) => void
   guesses: string[]
   isRevealing?: boolean
 }
@@ -15,6 +16,7 @@ export const Keyboard = ({
   onChar,
   onDelete,
   onEnter,
+  onArrow,
   guesses,
   isRevealing,
 }: Props) => {
@@ -38,6 +40,8 @@ export const Keyboard = ({
         e.preventDefault()
       } else if (e.code === 'Backspace') {
         onDelete()
+      } else if (['ArrowRight', 'ArrowLeft'].includes(e.code)) {
+        onArrow(e.code)
       } else {
         const key = localeAwareUpperCase(e.key)
         // TODO: check this test if the range works with non-english letters
@@ -50,11 +54,11 @@ export const Keyboard = ({
     return () => {
       window.removeEventListener('keyup', listener)
     }
-  }, [onEnter, onDelete, onChar])
+  }, [onEnter, onDelete, onChar, onArrow])
 
   return (
-    <div>
-      <div className="flex justify-center mb-1 sm:-ml-12">
+    <div className="h-full flex flex-col justify-end mx-auto max-w-2xl">
+      <div className="flex justify-start mb-1 h-full max-h-14">
         {['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P'].map((key) => (
           <Key
             value={key}
@@ -65,7 +69,7 @@ export const Keyboard = ({
           />
         ))}
       </div>
-      <div className="flex justify-center mb-1 ml-2 xs:ml-4">
+      <div className="flex justify-start mb-1 ml-1 xs:ml-4 h-full max-h-14">
         {['A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L'].map((key) => (
           <Key
             value={key}
@@ -75,7 +79,7 @@ export const Keyboard = ({
             isRevealing={isRevealing}
           />
         ))}
-        <Key value="DELETE" onClick={onClick}>
+        <Key width={10} value="DELETE" onClick={onClick}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="16"
@@ -87,7 +91,7 @@ export const Keyboard = ({
           </svg>
         </Key>
       </div>
-      <div className="flex justify-center ml-6">
+      <div className="flex justify-start ml-6 h-full max-h-14">
         {['Z', 'X', 'C', 'V', 'B', 'N', 'M'].map((key) => (
           <Key
             value={key}
@@ -97,7 +101,7 @@ export const Keyboard = ({
             isRevealing={isRevealing}
           />
         ))}
-        <Key width={89} value="ENTER" onClick={onClick}>
+        <Key width={24} value="ENTER" onClick={onClick}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="20"

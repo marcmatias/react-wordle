@@ -18,7 +18,7 @@ export const BaseModal = ({ title, children, isOpen, handleClose }: Props) => {
         onClose={handleClose}
         tabIndex={0}
       >
-        <div className="flex items-center justify-center min-h-full py-10 px-4 text-center sm:block sm:p-0 h-full">
+        <div className="flex items-center justify-center min-h-full py-10 px-4 text-center sm:p-0">
           <Transition.Child
             as={Fragment}
             enter="ease-out duration-300"

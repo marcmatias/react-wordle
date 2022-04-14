@@ -16,6 +16,8 @@ export const CORRECT_WORD_MESSAGE = (solution: string) =>
   `O nome era ${solution}`
 export const WELCOME_MESSAGE = (solution: string) =>
   `O nome do dia tem ${solution.length} letras`
+export const GUESSES_REMAINING_MESSAGE = (guesses: number) =>
+  `Você tem mais ${guesses} tentativa(s)`
 export const WRONG_SPOT_MESSAGE = (guess: string, position: number) =>
   `Deve usar ${guess} na posição ${position}`
 export const NOT_CONTAINED_MESSAGE = (letter: string) =>

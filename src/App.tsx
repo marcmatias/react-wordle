@@ -12,6 +12,7 @@ import {
   CORRECT_WORD_MESSAGE,
   HARD_MODE_ALERT_MESSAGE,
   WELCOME_MESSAGE,
+  GUESSES_REMAINING_MESSAGE,
 } from './constants/strings'
 import {
   MAX_WORD_LENGTH,
@@ -179,32 +180,57 @@ function App() {
       guesses.length < MAX_CHALLENGES &&
       !isGameWon
     ) {
-      const currentGuessSplit = currentGuess.split('')
+      const currentGuessSplited = currentGuess.split('')
 
-      currentGuessSplit[currentCell] = value
+      currentGuessSplited[currentCell] = value
 
-      setCurrentGuess(currentGuessSplit.join(''))
+      setCurrentGuess(currentGuessSplited.join(''))
 
-      setCurrentCell(currentCell + 1)
+      const nextSpaceIndex = currentGuessSplited.findIndex(
+        (e, i) => e === ' ' && i > currentCell
+      )
+      if (nextSpaceIndex > 0) {
+        setCurrentCell(nextSpaceIndex)
+      } else {
+        const backSpaceIndex = currentGuessSplited.findIndex((e) => e === ' ')
+
+        if (backSpaceIndex > -1) {
+          setCurrentCell(backSpaceIndex)
+        } else {
+          setCurrentCell(MAX_WORD_LENGTH)
+        }
+      }
     }
   }
 
   const onDelete = () => {
-    const currentGuessSplit = currentGuess.split('')
+    const currentGuessSplited = currentGuess.split('')
 
     if (
-      currentGuessSplit[currentCell] !== ' ' &&
+      currentGuessSplited[currentCell] !== ' ' &&
       currentCell < MAX_WORD_LENGTH
     ) {
-      currentGuessSplit[currentCell] = ' '
+      currentGuessSplited[currentCell] = ' '
     } else {
-      currentGuessSplit[currentCell - 1] = ' '
+      currentGuessSplited[currentCell - 1] = ' '
       if (currentCell > 0) {
         setCurrentCell(currentCell - 1)
       }
     }
 
-    setCurrentGuess(currentGuessSplit.join(''))
+    setCurrentGuess(currentGuessSplited.join(''))
+  }
+
+  const onArrow = (key: string) => {
+    if (key === 'ArrowRight') {
+      if (currentCell < MAX_WORD_LENGTH - 1) {
+        setCurrentCell(currentCell + 1)
+      } else if (currentCell > MAX_WORD_LENGTH - 1) {
+        setCurrentCell(0)
+      }
+    } else if (key === 'ArrowLeft' && currentCell > 0) {
+      setCurrentCell(currentCell - 1)
+    }
   }
 
   const onEnter = () => {
@@ -241,7 +267,7 @@ function App() {
     // chars have been revealed
     setTimeout(() => {
       setIsRevealing(false)
-    }, REVEAL_TIME_MS * MAX_WORD_LENGTH)
+    }, GAME_LOST_INFO_DELAY)
 
     const winningWord = isWinningWord(currentGuess)
 
@@ -260,17 +286,24 @@ function App() {
         return setIsGameWon(true)
       }
 
-      // Wait word reveal to add cursor to currentRow
+      // Wait word reveal to add cursor to next currentRow
       setTimeout(() => {
         setCurrentCell(0)
-      }, REVEAL_TIME_MS * MAX_WORD_LENGTH)
+        const gussesNow = guesses.length + 1
+        if (gussesNow < 6) {
+          showErrorAlert(
+            GUESSES_REMAINING_MESSAGE(MAX_CHALLENGES - gussesNow),
+            { durationMs: 2000 }
+          )
+        }
+      }, GAME_LOST_INFO_DELAY)
 
       if (guesses.length === MAX_CHALLENGES - 1) {
         setStats(addStatsForCompletedGame(stats, guesses.length + 1))
         setIsGameLost(true)
         showErrorAlert(CORRECT_WORD_MESSAGE(solution), {
           persist: true,
-          delayMs: REVEAL_TIME_MS * MAX_WORD_LENGTH + 1,
+          delayMs: GAME_LOST_INFO_DELAY,
         })
       }
     }
@@ -292,7 +325,7 @@ function App() {
           ' px-1 pb-8 md:max-w-7xl w-full mx-auto sm:px-6 lg:px-8 flex flex-col grow h-full'
         }
       >
-        <div className={'grow ' + (height > 600 ? 'pb-2 sm:pb-6' : '')}>
+        <div className={'grow ' + (height > 600 ? 'pb-2 sm:pb-6' : 'pb-1')}>
           <Grid
             solution={solution}
             guesses={guesses}
@@ -308,6 +341,7 @@ function App() {
           onChar={onChar}
           onDelete={onDelete}
           onEnter={onEnter}
+          onArrow={onArrow}
           guesses={guesses}
           isRevealing={isRevealing}
         />

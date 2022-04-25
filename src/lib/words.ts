@@ -1,26 +1,31 @@
 import { WORDS } from '../constants/wordlist'
+import { OCCURRENCES } from '../constants/occurrences'
 import { VALID_GUESSES } from '../constants/validGuesses'
 import { WRONG_SPOT_MESSAGE, NOT_CONTAINED_MESSAGE } from '../constants/strings'
 import { getGuessStatuses } from './statuses'
 import { default as GraphemeSplitter } from 'grapheme-splitter'
 
-const wordNoAccents = WORDS.map((x) =>
-  x.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+export const normalizeWord = (word: string) => {
+  return word.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+}
+
+const wordsNomalized = WORDS.split(' ').map((x) => normalizeWord(x))
+
+const validGuessesNormalized = VALID_GUESSES.split(' ').map((x) =>
+  normalizeWord(x)
 )
 
-const validGuessesNoAccents = VALID_GUESSES.map((x) =>
-  x.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
-)
+const occurrencesNormalized = OCCURRENCES.split(' ')
 
 export const isWordInWordList = (word: string) => {
   return (
-    wordNoAccents.includes(localeAwareLowerCase(word)) ||
-    validGuessesNoAccents.includes(localeAwareLowerCase(word))
+    wordsNomalized.includes(localeAwareLowerCase(word)) ||
+    validGuessesNormalized.includes(localeAwareLowerCase(word))
   )
 }
 
 export const isWinningWord = (word: string) => {
-  return solution.normalize('NFD').replace(/[\u0300-\u036f]/g, '') === word
+  return normalizeWord(solution) === word
 }
 
 // build a set of previously revealed letters - present and correct
@@ -88,17 +93,24 @@ export const getWordOfDay = () => {
   const msInDay = 86400000
   const index = Math.floor((now - epochMs) / msInDay)
   const nextday = (index + 1) * msInDay + epochMs
-  const solution = localeAwareUpperCase(WORDS[index % WORDS.length])
+
+  const resultIndex = index % wordsNomalized.length
+  const solution = localeAwareUpperCase(wordsNomalized[resultIndex])
+  const solutionOcurrences = occurrencesNormalized[resultIndex]
 
   return {
     solution,
-    solutionNoAccentuation: solution
-      .normalize('NFD')
-      .replace(/[\u0300-\u036f]/g, ''),
+    solutionOcurrences: solutionOcurrences,
+    solutionNoAccentuation: normalizeWord(solution),
     solutionIndex: index,
     tomorrow: nextday,
   }
 }
 
-export const { solution, solutionNoAccentuation, solutionIndex, tomorrow } =
-  getWordOfDay()
+export const {
+  solution,
+  solutionNoAccentuation,
+  solutionIndex,
+  tomorrow,
+  solutionOcurrences,
+} = getWordOfDay()

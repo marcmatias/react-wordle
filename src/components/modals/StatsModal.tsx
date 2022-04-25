@@ -12,7 +12,7 @@ import {
   SHARE_TEXT,
 } from '../../constants/strings'
 
-import { solution } from '../../lib/words'
+import { solution, solutionOcurrences } from '../../lib/words'
 
 type Props = {
   isOpen: boolean
@@ -68,18 +68,22 @@ export const StatsModal = ({
       />
       {(isGameLost || isGameWon) && (
         <div>
-          <p className="text-xm leading-6 font-medium text-gray-900 dark:text-gray-100 mt-4 hover:underline">
+          <p className="text-sm leading-6 font-medium text-gray-900 dark:text-gray-100 mt-4 hover:underline">
             <a
               href={`https://brasil.io/dataset/genero-nomes/nomes/?search=${solution}`}
               target="_blank"
               rel="noopener noreferrer"
               className="text-blue-600 dark:text-blue-400"
             >
-              Veja o dataset em que o nome do dia{' '}
-              <b className="text-blue-700 dark:text-blue-300 underline">
+              De acordo com o Censo 2010 do IBGE, existem{' '}
+              <strong className="text-blue-700 dark:text-blue-300">
+                {solutionOcurrences}
+              </strong>{' '}
+              pessoas chamadas{' '}
+              <strong className="text-blue-700 dark:text-blue-300 underline">
                 {solution}
-              </b>{' '}
-              foi extraído do Brasil.io
+              </strong>{' '}
+              no Brasil. Veja o dataset em que o nome foi extraído do Brasil.io
             </a>
           </p>
           <div className="mt-2 sm:mt-3 columns-2 dark:text-white">
